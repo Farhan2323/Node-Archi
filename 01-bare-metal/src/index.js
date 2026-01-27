@@ -1,6 +1,7 @@
 const http = require('http');
+const bodyParser = require('./utils/bodyParser');
 
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
     console.log(req.method, req.url);
     
     if (req.url ==='/users') {
@@ -8,7 +9,14 @@ const server = http.createServer((req, res) => {
             res.end('GET Users\n');
             return;
         }else if (req.method === 'POST') {
-            res.end('POST Users\n');
+            try {
+                const data = await bodyParser(req);
+                console.log('Parsed Data:', data);
+                res.end(`User Created: ${JSON.stringify(data)}\n`);
+            } catch (error) {
+                res.statusCode = 400;
+                res.end('Invalid JSON\n');
+            }
             return;
         }else  {
             res.statusCode = 405;
