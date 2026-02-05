@@ -1,8 +1,11 @@
 //Business Logic
-const findAll = require('./users.repository').findAll;
+const {findAll, create} = require('./users.repository');
 
 async function getAllUsers() {
     return findAll();
 }
 
-module.exports = { getAllUsers };
+async function createUser(user) {
+    return create(user);
+}
+module.exports = { getAllUsers , createUser };

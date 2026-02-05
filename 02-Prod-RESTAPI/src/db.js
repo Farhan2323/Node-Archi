@@ -1,12 +1,8 @@
-const {Pool} = require('pg');
+const { Pool } = require('pg');
+require('dotenv').config(); // Load variables from .env file
 
 const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'production_api',
-    password: '2002',
-    port: 5432,
-
+    connectionString: process.env.DATABASE_URL, // Use the variable from .env
 });
 
 module.exports = pool;

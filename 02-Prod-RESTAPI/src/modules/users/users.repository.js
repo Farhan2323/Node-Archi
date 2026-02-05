@@ -6,4 +6,12 @@ async function findAll() {
     return res.rows;
 }
 
-module.exports = { findAll };
+async function create(user) {
+    const query = 'INSERT INTO users (username, password) VALUES ($1, $2) RETURNING *';
+    const values = [user.username, user.password];
+    
+    const res = await pool.query(query, values);
+    return res.rows[0]; // Return the single user we just created
+}
+
+module.exports = { findAll, create };
